@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doraemon Manga World</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blue:#08a9e6;--darkblue:#0576b5;--red:#ef3340;--yellow:#ffd83d;--light:#eaf9ff;--white:#fff;--dark:#183446;--card:#fff;--shadow:0 10px 30px rgba(0,0,0,.15)}
+html{scroll-behavior:smooth}body{font-family:Arial,sans-serif;background:var(--light);color:var(--dark);transition:.3s}button,input{font-family:inherit}button{cursor:pointer}a{text-decoration:none}
+#loader{position:fixed;inset:0;background:var(--blue);color:white;z-index:99999;display:flex;flex-direction:column;justify-content:center;align-items:center}.loader-circle{width:90px;height:90px;border-radius:50%;border:8px solid white;border-top-color:var(--red);animation:spin 1s linear infinite}#loader p{margin-top:20px;font-size:20px}@keyframes spin{to{transform:rotate(360deg)}}
+header{position:sticky;top:0;z-index:5000;background:rgba(8,169,230,.97);box-shadow:0 4px 15px rgba(0,0,0,.15)}.nav{max-width:1400px;margin:auto;padding:12px 5%;display:flex;justify-content:space-between;align-items:center;gap:15px}.logo{color:white;font-size:23px;font-weight:bold}nav{display:flex;flex-wrap:wrap;justify-content:center;align-items:center}nav a{color:white;padding:8px;font-weight:bold}nav a:hover{color:var(--yellow)}
+.btn{border:none;border-radius:30px;padding:12px 20px;margin:5px;background:var(--red);color:white;font-weight:bold;box-shadow:0 5px 15px rgba(0,0,0,.15);transition:.2s}.btn:hover{transform:translateY(-3px)}.btn.blue{background:var(--blue)}.btn.yellow{background:var(--yellow);color:#333}.btn.dark{background:#243746}
+.hero{min-height:620px;display:flex;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;background:linear-gradient(#66d7ff,#eafaff)}.hero-content{position:relative;z-index:5}.hero h1{font-size:clamp(42px,7vw,80px);color:var(--darkblue);text-shadow:4px 4px white}.hero p{font-size:20px;margin:15px 0 25px}
+.dora-face{width:165px;height:165px;background:#08a9e6;border:6px solid #0576b5;border-radius:50%;margin:auto auto 20px;position:relative;animation:float 3s infinite ease-in-out;box-shadow:var(--shadow)}@keyframes float{50%{transform:translateY(-12px)}}.eye{position:absolute;width:43px;height:55px;background:white;border:2px solid #222;border-radius:50%;top:23px}.eye.left{left:36px}.eye.right{right:36px}.pupil{width:11px;height:20px;background:#222;border-radius:50%;position:absolute;bottom:7px;left:14px}.nose{width:19px;height:19px;background:var(--red);border-radius:50%;position:absolute;top:67px;left:67px;z-index:5}.mouth{position:absolute;width:75px;height:42px;border-bottom:4px solid #222;border-radius:50%;top:86px;left:44px}.bell{position:absolute;width:45px;height:45px;border-radius:50%;background:var(--yellow);border:3px solid #8c7200;bottom:-14px;left:54px}
+.cloud{position:absolute;width:170px;height:50px;background:white;border-radius:50px;opacity:.7;animation:cloud 25s linear infinite}.cloud:before,.cloud:after{content:"";position:absolute;background:white;border-radius:50%}.cloud:before{width:75px;height:75px;left:25px;bottom:3px}.cloud:after{width:85px;height:85px;right:20px;bottom:3px}.cloud.one{top:90px;left:-200px}.cloud.two{top:270px;left:-400px;animation-delay:7s}.cloud.three{top:430px;left:-600px;animation-delay:14s}@keyframes cloud{from{transform:translateX(0)}to{transform:translateX(160vw)}}
+section{max-width:1400px;margin:auto;padding:75px 6%}.section-title{text-align:center;color:var(--darkblue);font-size:38px;margin-bottom:10px}.subtitle{text-align:center;margin-bottom:35px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:25px}.card{background:var(--card);padding:22px;border-radius:20px;box-shadow:var(--shadow);transition:.3s}.card:hover{transform:translateY(-7px)}.card h3{color:var(--darkblue);margin:10px 0}.card p{line-height:1.6}
+.search-area{max-width:900px;margin:auto}.search-box{display:flex;margin-bottom:15px}.search-box input{flex:1;padding:15px 20px;border:2px solid #9edff7;border-radius:30px 0 0 30px;outline:none;font-size:16px}.search-box .btn{border-radius:0 30px 30px 0}.filters{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:30px}.filter{border:2px solid var(--blue);background:white;color:var(--darkblue);padding:8px 15px;border-radius:20px}.filter.active{background:var(--blue);color:white}
+.manga-cover{height:190px;border-radius:15px;background:linear-gradient(135deg,#5ed9ff,#0787cb);display:flex;justify-content:center;align-items:center;font-size:75px;margin-bottom:15px}.tag{background:#e2f7ff;color:var(--darkblue);padding:5px 10px;border-radius:20px;font-size:12px;font-weight:bold}.heart{float:right;font-size:28px;color:var(--red);cursor:pointer}
+.chapter-box{max-width:900px;margin:30px auto;background:var(--card);padding:25px;border-radius:20px;box-shadow:var(--shadow)}.chapter-list{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:20px}.chapter-btn{padding:10px 15px;border:none;border-radius:20px;background:#e2f7ff;color:var(--darkblue);font-weight:bold}.chapter-btn.active{background:var(--blue);color:white}
+.reader{max-width:1050px;margin:35px auto;background:#172c3b;padding:25px;border-radius:25px;color:white;box-shadow:var(--shadow)}.reader-title{text-align:center;margin-bottom:15px}.progress-container{height:9px;background:#50616d;border-radius:20px;overflow:hidden;margin-bottom:20px}.reading-progress{height:100%;width:0;background:var(--yellow);transition:.3s}.manga-page{min-height:470px;background:white;color:#222;border-radius:10px;padding:15px;display:grid;grid-template-columns:1fr 1fr;gap:12px;perspective:1200px}.panel{min-height:210px;border:4px solid #222;background:#fffdf0;display:flex;align-items:center;justify-content:center;text-align:center;padding:25px;font-size:19px}.panel:nth-child(even){background:#eff9ff}.page-animation{animation:pageTurn .55s ease}@keyframes pageTurn{0%{opacity:0;transform:rotateY(-90deg)}100%{opacity:1;transform:rotateY(0)}}.reader-controls{text-align:center;margin-top:20px}.reader-info{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:15px;font-size:14px}.bookmark{color:var(--yellow);font-weight:bold}
+.gadget-card{text-align:center;cursor:pointer}.gadget-icon{font-size:70px;transition:.4s}.gadget-card:hover .gadget-icon{transform:scale(1.2) rotate(10deg)}
+.quiz{max-width:750px;margin:auto;background:var(--card);padding:35px;border-radius:22px;box-shadow:var(--shadow);text-align:center}.quiz-progress{height:8px;background:#d8edf5;border-radius:20px;overflow:hidden;margin:20px 0}.quiz-progress>div{height:100%;width:0;background:var(--blue)}.quiz-option{width:100%;border:2px solid #b7e5f7;background:white;padding:14px;border-radius:12px;margin:8px 0;text-align:left;transition:.2s}.quiz-option:hover{background:#eaf9ff;transform:translateX(5px)}.result{margin-top:20px;font-size:22px;font-weight:bold;color:var(--darkblue)}
+.character{height:150px;border-radius:15px;background:#e8f8ff;display:flex;align-items:center;justify-content:center;font-size:75px}
+.game-container{max-width:800px;margin:auto}.game-board{height:400px;position:relative;overflow:hidden;border-radius:20px;border:5px solid var(--darkblue);background:linear-gradient(#7edfff,#e3faff)}.game-ground{position:absolute;bottom:0;left:0;right:0;height:55px;background:#59b94d}#dorayaki{position:absolute;display:none;font-size:48px;cursor:pointer;user-select:none}.game-info{text-align:center;font-size:20px;font-weight:bold;margin:15px}
+.memory-grid{max-width:700px;margin:25px auto;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.memory-card{height:110px;background:var(--blue);color:white;border-radius:15px;display:flex;justify-content:center;align-items:center;font-size:42px;cursor:pointer}.memory-card.flipped{background:white;color:#222}
+.time-machine{max-width:900px;margin:auto;padding:40px;border-radius:25px;text-align:center;color:white;background:radial-gradient(circle,#267fae,#101c27);box-shadow:var(--shadow)}.time-screen{min-height:160px;border:2px dashed white;border-radius:20px;margin:25px 0;display:flex;justify-content:center;align-items:center;font-size:28px;padding:20px}.time-animation{animation:timeTravel .8s ease}@keyframes timeTravel{0%{transform:scale(.2) rotate(0);opacity:0}50%{transform:scale(1.2) rotate(180deg)}100%{transform:scale(1) rotate(360deg);opacity:1}}
+.favorite-item{padding:15px;border-bottom:1px solid #ddd;font-size:18px}footer{background:var(--darkblue);color:white;text-align:center;padding:45px}
+body.dark{--light:#101b25;--dark:#edf8ff;--card:#1c2d3a}body.dark .search-box input,body.dark .quiz-option,body.dark .filter{background:#253947;color:white}body.dark .chapter-btn{background:#253947;color:white}body.dark .manga-page{background:#253947}body.dark .panel{color:#222}
+@media(max-width:750px){.nav{flex-direction:column}nav a{font-size:12px;padding:5px}.hero{min-height:560px}.hero h1{font-size:43px}.hero p{font-size:16px}.manga-page{grid-template-columns:1fr}.search-box{flex-direction:column}.search-box input{border-radius:30px;margin-bottom:8px}.search-box .btn{border-radius:30px}.memory-grid{grid-template-columns:repeat(2,1fr)}.reader{padding:12px}}
+</style>
+</head>
+<body>
+<div id="loader"><div class="loader-circle"></div><p>🚪 Opening Anywhere Door...</p></div>
+
+<header><div class="nav">
+<div class="logo">🔵 Doraemon Manga World</div>
+<nav>
+<a href="#home">Home</a><a href="#manga">Manga</a><a href="#gadgets">Gadgets</a><a href="#quiz">Quiz</a><a href="#characters">Characters</a><a href="#games">Games</a><a href="#time">Time</a><a href="#favorites">❤️</a>
+<button class="btn yellow" onclick="toggleDark()">🌙</button>
+</nav></div></header>
+
+<section class="hero" id="home">
+<div class="cloud one"></div><div class="cloud two"></div><div class="cloud three"></div>
+<div class="hero-content">
+<div class="dora-face"><div class="eye left"><div class="pupil"></div></div><div class="eye right"><div class="pupil"></div></div><div class="nose"></div><div class="mouth"></div><div class="bell"></div></div>
+<h1>Doraemon Manga World</h1><p>📖 Read • 🎮 Play • 🎒 Explore • ⏰ Travel</p>
+<button class="btn" onclick="goTo('manga')">📖 Start Reading</button><button class="btn blue" onclick="goTo('gadgets')">🎒 Explore Gadgets</button>
+</div></section>
+
+<section id="manga">
+<h2 class="section-title">📖 Manga Library</h2><p class="subtitle">Choose a story, select a chapter and start reading.</p>
+<div class="search-area"><div class="search-box"><input id="searchInput" placeholder="🔎 Search stories..." oninput="searchStories()"><button class="btn blue">Search</button></div>
+<div class="filters"><button class="filter active" onclick="filterCategory('all',this)">All</button><button class="filter" onclick="filterCategory('Adventure',this)">Adventure</button><button class="filter" onclick="filterCategory('Comedy',this)">Comedy</button><button class="filter" onclick="filterCategory('Time Travel',this)">Time Travel</button></div></div>
+
+<div class="grid" id="storyGrid">
+<div class="card story" data-title="The Mysterious Door" data-category="Adventure"><div class="manga-cover">🚪</div><span class="tag">Adventure</span><span class="heart" onclick="favoriteStory('The Mysterious Door',this)">♡</span><h3>The Mysterious Door</h3><p>A mysterious door leads the friends toward an unexpected adventure.</p><button class="btn blue" onclick="openStory(0)">📖 Read Story</button></div>
+<div class="card story" data-title="Time Trouble" data-category="Time Travel"><div class="manga-cover">⏰</div><span class="tag">Time Travel</span><span class="heart" onclick="favoriteStory('Time Trouble',this)">♡</span><h3>Time Trouble</h3><p>A journey through time creates a surprising problem.</p><button class="btn blue" onclick="openStory(1)">📖 Read Story</button></div>
+<div class="card story" data-title="Gadget Race" data-category="Comedy"><div class="manga-cover">🚁</div><span class="tag">Comedy</span><span class="heart" onclick="favoriteStory('Gadget Race',this)">♡</span><h3>Gadget Race</h3><p>Everyone wants to test a fantastic gadget first.</p><button class="btn blue" onclick="openStory(2)">📖 Read Story</button></div>
+</div>
+
+<div class="chapter-box" id="chapterBox" style="display:none"><h2 id="chapterHeading">Select Chapter</h2><div class="chapter-list" id="chapterList"></div></div>
+
+<div class="reader" id="reader" style="display:none">
+<h2 class="reader-title" id="readerTitle">Manga Reader</h2><div class="progress-container"><div class="reading-progress" id="readingProgress"></div></div>
+<div class="manga-page" id="mangaPage"></div>
+<div class="reader-controls"><button class="btn blue" onclick="changePage(-1)">◀ Previous</button><button class="btn" onclick="changePage(1)">Next ▶</button><button class="btn yellow" onclick="toggleBookmark()">🔖 Bookmark</button><button class="btn dark" onclick="closeReader()">✖ Close</button></div>
+<div class="reader-info"><span id="pageText">Page 1</span><span class="bookmark" id="bookmarkText">Not bookmarked</span></div>
+</div>
+</section>
+
+<section id="gadgets"><h2 class="section-title">🎒 Gadget Museum</h2><p class="subtitle">Click a gadget to learn more.</p><div class="grid">
+<div class="card gadget-card" onclick="gadgetInfo('Anywhere Door','An imaginary door that can take you to another chosen place.')"><div class="gadget-icon">🚪</div><h3>Anywhere Door</h3><p>Instant imaginary travel.</p></div>
+<div class="card gadget-card" onclick="gadgetInfo('Time Machine','An imaginary machine used to visit different points in time.')"><div class="gadget-icon">⏰</div><h3>Time Machine</h3><p>Explore time.</p></div>
+<div class="card gadget-card" onclick="gadgetInfo('Take-copter','An imaginary flying gadget for exploring the sky.')"><div class="gadget-icon">🚁</div><h3>Take-copter</h3><p>Fly through the sky.</p></div>
+<div class="card gadget-card" onclick="gadgetInfo('Translation Gadget','An imaginary gadget that helps characters understand different languages.')"><div class="gadget-icon">🗣️</div><h3>Translation Gadget</h3><p>Understand languages.</p></div>
+<div class="card gadget-card" onclick="gadgetInfo('Small Light','An imaginary gadget that makes objects smaller.')"><div class="gadget-icon">🔦</div><h3>Small Light</h3><p>Shrink objects.</p></div>
+<div class="card gadget-card" onclick="gadgetInfo('Big Light','An imaginary gadget that makes objects bigger.')"><div class="gadget-icon">💡</div><h3>Big Light</h3><p>Enlarge objects.</p></div>
+</div></section>
+
+<section id="quiz"><h2 class="section-title">🧠 Gadget Quiz</h2><p class="subtitle">Which gadget would be perfect for your adventure?</p><div class="quiz"><h3 id="quizQuestion">Loading...</h3><div class="quiz-progress"><div id="quizProgress"></div></div><div id="quizOptions"></div><div class="result" id="quizResult"></div></div></section>
+
+<section id="characters"><h2 class="section-title">👥 Character World</h2><p class="subtitle">Meet the main characters.</p><div class="grid">
+<div class="card"><div class="character">🔵</div><h3>Doraemon</h3><p>A friendly robotic cat from the future.</p></div>
+<div class="card"><div class="character">👦</div><h3>Nobita</h3><p>A kind-hearted boy who often finds himself in unusual situations.</p></div>
+<div class="card"><div class="character">👧</div><h3>Shizuka</h3><p>A kind and thoughtful friend.</p></div>
+<div class="card"><div class="character">💪</div><h3>Gian</h3><p>A strong and confident friend.</p></div>
+<div class="card"><div class="character">😎</div><h3>Suneo</h3><p>A clever and confident friend.</p></div>
+</div></section>
+
+<section id="games"><h2 class="section-title">🎮 Mini Games</h2><p class="subtitle">Play some fun mini games.</p>
+<div class="game-container"><div class="card"><h3 style="text-align:center">🍩 Catch the Dorayaki</h3><div class="game-info">Score: <span id="score">0</span> &nbsp;&nbsp; Time: <span id="gameTime">30</span></div>
+<div class="game-board" id="gameBoard"><div id="dorayaki">🍩</div><div class="game-ground"></div></div><div style="text-align:center"><button class="btn blue" onclick="startDorayakiGame()">▶ Start Game</button></div><p id="gameMessage" style="text-align:center;margin-top:10px">Catch the Dorayaki!</p></div></div>
+<div style="margin-top:60px"><h3 style="text-align:center;color:var(--darkblue);font-size:28px">🧠 Gadget Memory Game</h3><p class="subtitle">Match all the gadgets.</p><div class="memory-grid" id="memoryGrid"></div><div style="text-align:center"><button class="btn blue" onclick="createMemoryGame()">🔄 Restart</button></div></div>
+</section>
+
+<section id="time"><h2 class="section-title">⏰ Time Machine</h2><p class="subtitle">Choose an imaginary destination.</p><div class="time-machine"><h2>🚀 TIME MACHINE</h2><div class="time-screen" id="timeScreen">Choose your destination...</div>
+<button class="btn yellow" onclick="travelTime('🏛️ THE PAST','Welcome to an imaginary world from long ago!')">🏛️ Past</button><button class="btn" onclick="travelTime('🌆 THE PRESENT','You returned safely to the present.')">🌆 Present</button><button class="btn blue" onclick="travelTime('🚀 THE FUTURE','Welcome to an amazing imaginary future!')">🚀 Future</button>
+</div></section>
+
+<section id="favorites"><h2 class="section-title">❤️ My Favorites</h2><p class="subtitle">Your favorite stories are stored in this browser.</p><div class="card" id="favoritesList">No favorite stories yet.</div></section>
+
+<footer><h2>🔵 Doraemon Manga World</h2><p style="margin-top:10px">Read • Play • Explore • Imagine</p><p style="margin-top:10px">Made with HTML, CSS and JavaScript ❤️</p><p style="margin-top:15px;font-size:13px">Fan-made educational project with original sample content.</p></footer>
+
+<script>
+window.addEventListener("load",()=>setTimeout(()=>document.getElementById("loader").style.display="none",1000));
+function goTo(id){document.getElementById(id).scrollIntoView({behavior:"smooth"})}
+function playSound(type){try{const C=window.AudioContext||window.webkitAudioContext,ctx=new C(),o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=type==="success"?900:600;g.gain.setValueAtTime(.08,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.2);o.start();o.stop(ctx.currentTime+.2)}catch(e){}}
+
+const stories=[
+{title:"The Mysterious Door",category:"Adventure",chapters:[
+{title:"Chapter 1: The Door",pages:[["🚪","A mysterious door suddenly appears in the room.","Where could it lead?"],["😮","Nobita looks at the strange door.","This looks interesting!"],["🌳","The door opens into a beautiful garden.","An adventure begins!"],["✨","The friends discover something unexpected.","To be continued..."]]},
+{title:"Chapter 2: The Secret Garden",pages:[["🌳","The friends enter the mysterious garden.","Everything looks magical."],["🦋","Colorful butterflies fly around them.","What a beautiful place!"],["💎","They discover a hidden treasure.","But should they take it?"],["🏠","They decide to return home.","Adventure complete!"]]}]},
+{title:"Time Trouble",category:"Time Travel",chapters:[
+{title:"Chapter 1: Time Machine",pages:[["⏰","A journey through time sounds exciting.","Let's go!"],["🚀","The time machine begins moving.","Hold on!"],["🏛️","They arrive in a completely different era.","Where are we?"],["😱","Something unexpected happens.","We need to fix this!"]]},
+{title:"Chapter 2: Return Home",pages:[["🕰️","The friends search for a way back.","We must be careful."],["✨","They find the correct time.","Let's return home."],["🚀","The time machine starts again.","Almost there!"],["🏠","Everyone safely returns home.","The End!"]]}]},
+{title:"Gadget Race",category:"Comedy",chapters:[
+{title:"Chapter 1: The Race",pages:[["🚁","Everyone wants to test a flying gadget.","Ready?"],["💨","The race begins.","Go! Go! Go!"],["😵","Things become much faster than expected.","Whoa!"],["😂","Everyone starts laughing.","What a race!"]]},
+{title:"Chapter 2: The Winner",pages:[["🏆","The friends reach the finish line.","Who won?"],["🤝","They realize that having fun matters more.","Let's celebrate!"],["🍩","Everyone shares some snacks.","Yummy!"],["😊","The adventure ends with laughter.","The End!"]]}]}
+];
+
+let storyIndex=0,chapterIndex=0,pageIndex=0;
+function openStory(index){storyIndex=index;const saved=JSON.parse(localStorage.getItem("readingPosition")||"{}");chapterIndex=saved.storyIndex===index?saved.chapterIndex||0:0;pageIndex=saved.storyIndex===index?saved.pageIndex||0:0;showChapterSelector();renderPage();document.getElementById("reader").style.display="block";document.getElementById("reader").scrollIntoView({behavior:"smooth"});playSound("click")}
+function showChapterSelector(){const story=stories[storyIndex];document.getElementById("chapterBox").style.display="block";document.getElementById("chapterHeading").textContent="📚 "+story.title+" — Chapters";const list=document.getElementById("chapterList");list.innerHTML="";story.chapters.forEach((chapter,index)=>{const b=document.createElement("button");b.className="chapter-btn";if(index===chapterIndex)b.classList.add("active");b.textContent=chapter.title;b.onclick=()=>{chapterIndex=index;pageIndex=0;showChapterSelector();renderPage();saveReadingPosition()};list.appendChild(b)})}
+function renderPage(){const story=stories[storyIndex],chapter=story.chapters[chapterIndex],page=chapter.pages[pageIndex],m=document.getElementById("mangaPage");document.getElementById("readerTitle").textContent="📖 "+story.title+" — "+chapter.title;m.classList.remove("page-animation");void m.offsetWidth;m.classList.add("page-animation");m.innerHTML=`<div class="panel"><div><div style="font-size:75px">${page[0]}</div><br><strong>${page[1]}</strong><br><br><small>${page[2]}</small></div></div><div class="panel"><div><div style="font-size:60px">📚</div><br><strong>Manga Panel</strong><br><br><small>Turn the page to continue your adventure.</small></div></div>`;document.getElementById("readingProgress").style.width=((pageIndex+1)/chapter.pages.length*100)+"%";document.getElementById("pageText").textContent="Page "+(pageIndex+1)+" of "+chapter.pages.length;updateBookmark();saveReadingPosition()}
+function changePage(direction){const chapter=stories[storyIndex].chapters[chapterIndex];pageIndex+=direction;if(pageIndex<0){if(chapterIndex>0){chapterIndex--;pageIndex=stories[storyIndex].chapters[chapterIndex].pages.length-1;showChapterSelector()}else pageIndex=0}if(pageIndex>=chapter.pages.length){if(chapterIndex<stories[storyIndex].chapters.length-1){chapterIndex++;pageIndex=0;showChapterSelector()}else{pageIndex=chapter.pages.length-1;alert("🎉 You reached the end of this story!")}}renderPage();playSound("click")}
+function toggleBookmark(){localStorage.setItem("mangaBookmark",JSON.stringify({storyIndex,chapterIndex,pageIndex}));updateBookmark();playSound("success")}
+function updateBookmark(){const saved=JSON.parse(localStorage.getItem("mangaBookmark")||"null"),text=document.getElementById("bookmarkText");text.textContent=saved&&saved.storyIndex===storyIndex&&saved.chapterIndex===chapterIndex&&saved.pageIndex===pageIndex?"🔖 Bookmarked":"Not bookmarked"}
+function saveReadingPosition(){localStorage.setItem("readingPosition",JSON.stringify({storyIndex,chapterIndex,pageIndex}))}
+function closeReader(){document.getElementById("reader").style.display="none"}
+function searchStories(){const value=document.getElementById("searchInput").value.toLowerCase();document.querySelectorAll(".story").forEach(c=>c.style.display=c.dataset.title.toLowerCase().includes(value)?"block":"none")}
+function filterCategory(category,button){document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));button.classList.add("active");document.querySelectorAll(".story").forEach(c=>c.style.display=category==="all"||c.dataset.category===category?"block":"none")}
+function gadgetInfo(name,description){alert("🎒 "+name+"\n\n"+description);playSound("click")}
+
+const quiz=[
+{question:"What would you like to do?",options:["Travel anywhere","Travel through time","Fly through the sky","Understand languages"],answers:["🚪 Anywhere Door","⏰ Time Machine","🚁 Take-copter","🗣️ Translation Gadget"]},
+{question:"Which adventure sounds exciting?",options:["Explore a new place","Visit history","Explore the sky","Talk with everyone"],answers:["🚪 Anywhere Door","⏰ Time Machine","🚁 Take-copter","🗣️ Translation Gadget"]},
+{question:"Choose your dream activity.",options:["Instant travel","Time travel","Flying","Learning languages"],answers:["🚪 Anywhere Door","⏰ Time Machine","🚁 Take-copter","🗣️ Translation Gadget"]}
+];
+let quizIndex=0;
+function loadQuiz(){const q=quiz[quizIndex];document.getElementById("quizQuestion").textContent=q.question;document.getElementById("quizProgress").style.width=((quizIndex+1)/quiz.length*100)+"%";document.getElementById("quizOptions").innerHTML=q.options.map((o,i)=>`<button class="quiz-option" onclick="answerQuiz(${i})">${o}</button>`).join("")}
+function answerQuiz(index){const q=quiz[quizIndex];document.getElementById("quizResult").textContent="🎉 Your gadget: "+q.answers[index];playSound("success");setTimeout(()=>{quizIndex=(quizIndex+1)%quiz.length;document.getElementById("quizResult").textContent="";loadQuiz()},1800)}
+loadQuiz();
+
+function favoriteStory(name,element){let favorites=JSON.parse(localStorage.getItem("favorites")||"[]");if(favorites.includes(name)){favorites=favorites.filter(x=>x!==name);element.textContent="♡"}else{favorites.push(name);element.textContent="♥";playSound("success")}localStorage.setItem("favorites",JSON.stringify(favorites));showFavorites()}
+function showFavorites(){const f=JSON.parse(localStorage.getItem("favorites")||"[]"),list=document.getElementById("favoritesList");list.innerHTML=f.length?f.map(x=>`<div class="favorite-item">❤️ ${x}</div>`).join(""):"No favorite stories yet."}
+showFavorites();
+
+let score=0,gameTime=30,gameInterval,foodInterval;
+function startDorayakiGame(){score=0;gameTime=30;document.getElementById("score").textContent=score;document.getElementById("gameTime").textContent=gameTime;clearInterval(gameInterval);clearInterval(foodInterval);moveDorayaki();foodInterval=setInterval(moveDorayaki,700);gameInterval=setInterval(()=>{gameTime--;document.getElementById("gameTime").textContent=gameTime;if(gameTime<=0)endGame()},1000)}
+function moveDorayaki(){const f=document.getElementById("dorayaki");f.style.display="block";f.style.left=(5+Math.random()*85)+"%";f.style.top=(15+Math.random()*65)+"%"}
+document.getElementById("dorayaki").addEventListener("click",()=>{score++;document.getElementById("score").textContent=score;playSound("success");moveDorayaki()});
+function endGame(){clearInterval(gameInterval);clearInterval(foodInterval);document.getElementById("dorayaki").style.display="none";document.getElementById("gameMessage").textContent="🏆 Game Over! Score: "+score}
+
+const memoryItems=["🚪","🚪","⏰","⏰","🚁","🚁","🔦","🔦"];let firstCard=null,secondCard=null,lockBoard=false,matches=0;
+function createMemoryGame(){const grid=document.getElementById("memoryGrid");grid.innerHTML="";firstCard=null;secondCard=null;lockBoard=false;matches=0;[...memoryItems].sort(()=>Math.random()-.5).forEach(s=>{const c=document.createElement("div");c.className="memory-card";c.dataset.symbol=s;c.textContent="❓";c.onclick=()=>flipCard(c);grid.appendChild(c)})}
+function flipCard(card){if(lockBoard||card===firstCard||card.classList.contains("flipped"))return;card.classList.add("flipped");card.textContent=card.dataset.symbol;if(!firstCard){firstCard=card;return}secondCard=card;checkMatch()}
+function checkMatch(){if(firstCard.dataset.symbol===secondCard.dataset.symbol){matches++;firstCard=null;secondCard=null;if(matches===4)setTimeout(()=>alert("🎉 You matched all gadgets!"),300);return}lockBoard=true;setTimeout(()=>{firstCard.classList.remove("flipped");secondCard.classList.remove("flipped");firstCard.textContent="❓";secondCard.textContent="❓";firstCard=null;secondCard=null;lockBoard=false},800)}
+createMemoryGame();
+
+function travelTime(title,message){const s=document.getElementById("timeScreen");s.classList.remove("time-animation");void s.offsetWidth;s.classList.add("time-animation");s.innerHTML=`<div><strong>${title}</strong><br><br><small>${message}</small></div>`;playSound("success")}
+function toggleDark(){document.body.classList.toggle("dark");localStorage.setItem("darkMode",document.body.classList.contains("dark"))}
+if(localStorage.getItem("darkMode")==="true")document.body.classList.add("dark");
+</script>
+</body>
+</html>
